@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+<<<<<<< HEAD
   <LinearLayout
       android:layout_width="409dp"
       android:layout_height="729dp"
@@ -72,5 +73,25 @@
           android:layout_marginLeft="10dp"
           android:text="Login"/>
   </LinearLayout>
+=======
+    <TextView
+        android:id="@+id/welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome to the next page"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/ReplyButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="Reply"
+        tools:ignore="MissingConstraints" />
+>>>>>>> 0a7ca35600e20aa026dc68adbd8e047cdc1fb4e9
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,11 +3,19 @@ plugins {
 }
 
 android {
+<<<<<<< HEAD
     namespace = "com.example.contact"
     compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.contact"
+=======
+    namespace = "com.example.lifecycle"
+    compileSdk = 36
+
+    defaultConfig {
+        applicationId = "com.example.lifecycle"
+>>>>>>> 0a7ca35600e20aa026dc68adbd8e047cdc1fb4e9
         minSdk = 24
         targetSdk = 36
         versionCode = 1

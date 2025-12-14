@@ -1,4 +1,5 @@
 <resources>
+<<<<<<< HEAD
     <string name="app_name">Contact</string>
     <string name="login_here">Login Here</string>
     <string name="welcome_message">Welcome to page</string>
@@ -7,4 +8,8 @@
         <item>India</item>
         <item>China</item>
     </string-array>
+=======
+    <string name="app_name">Lifecycle</string>
+
+>>>>>>> 0a7ca35600e20aa026dc68adbd8e047cdc1fb4e9
 </resources>

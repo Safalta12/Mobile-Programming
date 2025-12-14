@@ -6,5 +6,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Lifecycle">
+<<<<<<< HEAD
+=======
+    <Button
+        android:id="@+id/LoginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="Next"
+        tools:ignore="MissingConstraints" />
+>>>>>>> 0a7ca35600e20aa026dc68adbd8e047cdc1fb4e9
 
 </androidx.constraintlayout.widget.ConstraintLayout>

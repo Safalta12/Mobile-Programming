@@ -19,6 +19,10 @@ dependencyResolutionManagement {
     }
 }
 
+<<<<<<< HEAD
 rootProject.name = "Contact"
+=======
+rootProject.name = "Lifecycle"
+>>>>>>> 0a7ca35600e20aa026dc68adbd8e047cdc1fb4e9
 include(":app")
  

@@ -6,6 +6,7 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
+<<<<<<< HEAD
         android:icon="@mipmap/phone"
         android:label="Contact"
         android:roundIcon="@mipmap/phone"
@@ -19,6 +20,19 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
+=======
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Lifecycle">
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".Lifecycle"
+>>>>>>> 0a7ca35600e20aa026dc68adbd8e047cdc1fb4e9
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
