@@ -1,0 +1,110 @@
+string.xml
+
+    <resources>
+        <string name="app_name">HelloMobile</string>
+        <string name="button_text">Submit</string>
+        <string name="message_text">Hello! Button clicked!</string>
+    </resources>
+
+colors.xml
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFF</color>
+    <color name="light_blue">#87CEEB</color>
+    <color name="button_color">#FF6200EE</color>
+</resources>
+
+ic_button_icon.xml
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M12,2L15,8H9L12,2zM12,22a1,1 0,1 1,0-2 1,1 0,0 1,0 2z"/>
+</vector>
+
+MainActivity.java
+package com.example.hellomobile;
+
+import android.os.Bundle;
+import android.widget.*;
+
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_main);
+        final LinearLayout mainLayout = findViewById(R.id.main);
+        Button button = findViewById(R.id.buttonClick);
+
+        // Set click listener
+        button.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(android.view.View v) {
+                // Show message from string resources
+                Toast.makeText(MainActivity.this, getString(R.string.message_text), Toast.LENGTH_SHORT).show();
+
+                // Change background color using color resource
+                mainLayout.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.light_blue));
+            }
+        });
+    }
+}
+
+activity_main.xml
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
+    android:background="@color/white">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mobile Programming"
+        android:textSize="24sp"
+        android:layout_margin="10dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your name"
+        android:layout_margin="10dp"
+        android:padding="10dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your password"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/buttonClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_text"
+        android:drawableLeft="@drawable/ic_button_icon"
+        android:backgroundTint="@color/button_color"
+        android:textColor="@color/white"
+        android:layout_margin="10dp" />
+</LinearLayout>
+
+
