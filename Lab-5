@@ -1,0 +1,113 @@
+MainActivity.java
+package com.example.hellomobile;
+
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+public class MainActivity extends AppCompatActivity {
+
+    RecyclerView recyclerView;
+
+    String[] productList = {"Mobile Phone", "Charger", "USB Cable", "Power Bank", "Earphones","Speaker"};
+    String[] PriceList = {"15000", "800", "400", "1200","900", "2000"};
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        recyclerView = findViewById(R.id.recyclerView);
+
+        // 🔹 2 columns (THIS IS IMPORTANT)
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+
+        recyclerView.setAdapter(new MyAdapter(productList, PriceList));
+    }
+}
+
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>
+
+MyAdapter.java
+package com.example.hellomobile;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
+
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+
+    String[] productList;
+    String[] PriceList;
+
+    public MyAdapter(String[] productList, String[] PriceList) {
+        this.productList = productList;
+        this.PriceList = PriceList;
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView txtName, txtPrice;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            txtName = itemView.findViewById(R.id.txtName);
+            txtPrice = itemView.findViewById(R.id.txtPrice);
+        }
+    }
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_row, parent, false);
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.txtName.setText(productList[position]);
+        holder.txtPrice.setText(PriceList[position]);
+    }
+
+    @Override
+    public int getItemCount() {
+        return productList.length;
+    }
+}
+
+item_row.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/txtName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/txtPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"/>
+</LinearLayout>
