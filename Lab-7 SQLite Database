@@ -1,0 +1,218 @@
+MainActivity.java
+package com.example.hellomobile;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.database.Cursor;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+
+    DBHelper myDb;
+    EditText editId, editName, editEmail;
+    Button btnAdd, btnView, btnUpdate, btnDelete;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        myDb = new DBHelper(this);
+
+        editId = findViewById(R.id.editId);
+        editName = findViewById(R.id.editName);
+        editEmail = findViewById(R.id.editEmail);
+
+        btnAdd = findViewById(R.id.btnAdd);
+        btnView = findViewById(R.id.btnView);
+        btnUpdate = findViewById(R.id.btnUpdate);
+        btnDelete = findViewById(R.id.btnDelete);
+
+        addData();
+        viewAll();
+        updateData();
+        deleteData();
+    }
+
+    public void addData() {
+        btnAdd.setOnClickListener(v -> {
+            boolean inserted = myDb.insertData(
+                    editName.getText().toString(),
+                    editEmail.getText().toString()
+            );
+
+            Toast.makeText(MainActivity.this,
+                    inserted ? "Data Inserted" : "Insert Failed",
+                    Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    public void viewAll() {
+        btnView.setOnClickListener(v -> {
+            Cursor res = myDb.getAllData();
+            if (res.getCount() == 0) {
+                showMessage("Error", "No Data Found");
+                return;
+            }
+
+            StringBuilder buffer = new StringBuilder();
+            while (res.moveToNext()) {
+                buffer.append("ID: ").append(res.getString(0)).append("\n");
+                buffer.append("Name: ").append(res.getString(1)).append("\n");
+                buffer.append("Email: ").append(res.getString(2)).append("\n\n");
+            }
+
+            showMessage("User Data", buffer.toString());
+        });
+    }
+
+    public void updateData() {
+        btnUpdate.setOnClickListener(v -> {
+            boolean isUpdated = myDb.updateData(
+                    editId.getText().toString(),
+                    editName.getText().toString(),
+                    editEmail.getText().toString()
+            );
+
+            Toast.makeText(MainActivity.this,
+                    isUpdated ? "Data Updated" : "Update Failed",
+                    Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    public void deleteData() {
+        btnDelete.setOnClickListener(v -> {
+            Integer deletedRows = myDb.deleteData(editId.getText().toString());
+            Toast.makeText(MainActivity.this,
+                    deletedRows > 0 ? "Data Deleted" : "Delete Failed",
+                    Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    public void showMessage(String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.show();
+    }
+}
+
+activity_main.xml
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:fitsSystemWindows="true">
+
+    <EditText
+        android:id="@+id/editId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="ID"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/editName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Name" />
+
+    <EditText
+        android:id="@+id/editEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:inputType="textEmailAddress" />
+
+    <Button
+        android:id="@+id/btnAdd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add" />
+
+    <Button
+        android:id="@+id/btnUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Update" />
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete" />
+
+    <Button
+        android:id="@+id/btnView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View" />
+</LinearLayout>
+
+DBHelper.java
+package com.example.hellomobile;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+public class DBHelper extends SQLiteOpenHelper {
+
+    public static final String DB_NAME = "UserDB.db";
+    public static final String TABLE_NAME = "users";
+    public static final String COL_1 = "ID";
+    public static final String COL_2 = "NAME";
+    public static final String COL_3 = "EMAIL";
+
+    public DBHelper(Context context) {
+        super(context, DB_NAME, null, 1);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE users (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, EMAIL TEXT)");
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS users");
+        onCreate(db);
+    }
+
+    public boolean insertData(String name, String email) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COL_2, name);
+        cv.put(COL_3, email);
+        long result = db.insert(TABLE_NAME, null, cv);
+        return result != -1;
+    }
+
+    public boolean updateData(String id, String name, String email) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COL_2, name);
+        cv.put(COL_3, email);
+        db.update(TABLE_NAME, cv, "ID=?", new String[]{id});
+        return true;
+    }
+
+    public Integer deleteData(String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_NAME, "ID=?", new String[]{id});
+    }
+
+    public Cursor getAllData() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT * FROM users", null);
+    }
+}
