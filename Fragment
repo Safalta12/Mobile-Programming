@@ -1,0 +1,461 @@
+//FirstFragment.java
+package com.example.lifecycle;
+
+import android.content.Context;
+import android.os.Bundle;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import android.util.Log;
+import android.view.ContextMenu;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class FirstFragment extends Fragment {
+
+    private static final String TAG="FragmentLifecycle";
+@Override
+public void onAttach(@NonNull Context context){
+    super.onAttach(context);
+    Log.d(TAG,"FirstFragment: onAttach() called");
+    Toast.makeText(getActivity(),"FirstFragment: onAttach", Toast.LENGTH_SHORT).show();
+}
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.d(TAG,"FirstFragment: onCreate() called");
+        Toast.makeText(getActivity(),"FirstFragment: onCreate", Toast.LENGTH_SHORT).show();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        Log.d(TAG,"FirstFragment: onCreateView() called");
+        Toast.makeText(getActivity(),"FirstFragment: onCreateView", Toast.LENGTH_SHORT).show();
+        return inflater.inflate(R.layout.fragment_first, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+        Log.d(TAG,"FirstFragment: onViewCreated() called");
+        Toast.makeText(getActivity(),"FirstFragment: onViewCreated", Toast.LENGTH_SHORT).show();
+
+        TextView LTPTextView=view.findViewById(R.id.LPTextView);
+        registerForContextMenu(LTPTextView);
+    }
+
+    @Override
+    public void onCreateContextMenu(
+            @NonNull ContextMenu menu, @NonNull View v,
+            @Nullable ContextMenu.ContextMenuInfo menuInfo
+    ){
+        super.onCreateContextMenu(menu,v,menuInfo);
+        getActivity().getMenuInflater().inflate(R.menu.context_menu,menu);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Log.d(TAG,"FirstFragment: onActivityCreated() called");
+        Toast.makeText(getActivity(),"FirstFragment: onActivityCreated", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onStart(){
+    super.onStart();
+        Log.d(TAG,"FirstFragment: onStart() called");
+        Toast.makeText(getActivity(),"FirstFragment: onStart", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        Log.d(TAG,"FirstFragment: onResume() called");
+        Toast.makeText(getActivity(),"FirstFragment: onResume", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        Log.d(TAG,"FirstFragment: onPause() called");
+        Toast.makeText(getActivity(),"FirstFragment: onPause", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        Log.d(TAG,"FirstFragment: onStop() called");
+        Toast.makeText(getActivity(),"FirstFragment: onStop", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDestroyView(){
+        super.onDestroyView();
+        Log.d(TAG,"FirstFragment: onDestroyView() called");
+        Toast.makeText(getActivity(),"FirstFragment: onDestroyView", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        Log.d(TAG,"FirstFragment: onDestroy() called");
+        Toast.makeText(getActivity(),"FirstFragment: onDestroy", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDetach(){
+        super.onDetach();
+        Log.d(TAG,"FirstFragment: onDetach() called");
+        Toast.makeText(getActivity(),"FirstFragment: onDetach", Toast.LENGTH_SHORT).show();
+    }
+}
+
+
+//fragment_first.xml
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FirstFragment"
+    >
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:id="@+id/LPTextView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="30dp"
+        android:text="@string/hello_blank_fragment" />
+
+</FrameLayout>
+
+
+//SecondFragment.java
+package com.example.lifecycle;
+import android.os.Bundle;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.PopupMenu;
+import android.widget.Toast;
+
+public class SecondFragment extends Fragment {
+
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+
+    public SecondFragment() {
+        // Required empty public constructor
+    }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment SecondFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static SecondFragment newInstance(String param1, String param2) {
+        SecondFragment fragment = new SecondFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_second, container, false);
+    }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+
+        Button showPopupButton = view.findViewById(R.id.showPopupButton);
+        showPopupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { showPopupMenu(v);
+            }
+        });
+    }
+    private void showPopupMenu(View view){
+        PopupMenu popup = new PopupMenu(getActivity() ,view);
+        popup.getMenuInflater().inflate(R.menu.popupmenu,popup.getMenu());
+
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int itemId = item.getItemId();
+                if (itemId == R.id.action_share){
+                    Toast.makeText(getActivity(), "Share selected", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                else if (itemId == R.id.action_report) {
+                    Toast.makeText(getActivity(), "Report selected", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                return false;
+            }
+        });
+        popup.show();
+    }
+    }
+
+
+//fragment_second.xml
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SecondFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/hello_blank_fragment"
+        android:textSize="30dp"/>
+
+    <Button
+        android:id="@+id/showPopupButton"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        android:text="Show popup menu"/>
+</FrameLayout>
+
+
+//lifecycle.java
+package com.example.lifecycle;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+public class lifecycle extends AppCompatActivity {
+
+    private static final int REQUEST_CODE=1;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_lifecycle);
+
+        Button showFirstFragmentButton=findViewById(R.id.showFirstFragmentButton);
+        Button showSecondFragmentButton=findViewById(R.id.showSecondFragmentButton);
+
+        showFirstFragmentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replacedFragment(new FirstFragment());
+            }
+        });
+        showSecondFragmentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replacedFragment(new SecondFragment());
+            }
+        });
+       }
+
+    private void replacedFragment(Fragment fragment){
+        FragmentManager fragmentManager=getSupportFragmentManager();
+        FragmentTransaction transaction=fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.commit();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater=getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item){
+        int itemId=item.getItemId();
+        if (itemId==R.id.action_profile){
+            Toast.makeText(this,"Prfile Selected",Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (itemId==R.id.action_setting) {
+            Toast.makeText(this, "Setting Selected", Toast.LENGTH_SHORT).show();
+            return true;
+        }else if (itemId==R.id.action_help) {
+            Toast.makeText(this, "Help Selected", Toast.LENGTH_SHORT).show();
+            return true;
+        }else if (itemId==R.id.exit) {
+            showSimpleDialog();
+            return true;
+        }else if (itemId==R.id.list_item) {
+            Intent intent=new Intent(lifecycle.this,ListViewActivity.class);
+            startActivity(intent);
+            Toast.makeText(this, "Item Selected", Toast.LENGTH_SHORT).show();
+            return true;
+        }else if (itemId==R.id.recyclerview) {
+            Intent intent=new Intent(lifecycle.this,RecycleViewActivity.class);
+            startActivity(intent);
+            Toast.makeText(this, "Item Selected", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void showSimpleDialog(){
+        new AlertDialog.Builder(this)
+                .setTitle("Exit Option Selected")
+                .setMessage("You selected Exit. Continue?")
+                .setPositiveButton("yes",(dialog, which) -> {
+                    finishAffinity();
+                })
+                .setPositiveButton("Yes",(dialog, which) ->
+                        Toast.makeText(this,"Confirmed",Toast.LENGTH_SHORT).show())
+                .setNegativeButton("No",(dialog, which) -> dialog.dismiss())
+                .create()
+                .show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
+        super.onActivityResult(requestCode,resultCode,data);
+        if(requestCode==REQUEST_CODE && resultCode== Activity.RESULT_OK){
+            if(data!= null && data.hasExtra("reply")){
+                String reply=data.getStringExtra("reply");
+                Toast.makeText(this,"Reply from mainactivity."+ reply,Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        Log.d("Lifecycle Text","Activity Started");
+        Toast.makeText(this,"onStart",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        Log.d("Lifecycle Text","Activity Resumed");
+        Toast.makeText(this,"onResume",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onRestart(){
+        super.onRestart();
+        Log.d("Lifecycle Text","Activity Restarted");
+        Toast.makeText(this,"onRestart",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        Log.d("Lifecycle Text","Activity Paused");
+        Toast.makeText(this,"onPause",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        Log.d("Lifecycle Text","Activity Stopped");
+        Toast.makeText(this,"onStop",Toast.LENGTH_SHORT).show();
+    }
+}
+
+
+//activity_lifecycle.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".lifecycle">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_horizontal"
+    android:padding="8dp">
+
+    <Button
+        android:id="@+id/showFirstFragmentButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show First Fragment"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/showSecondFragmentButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Second Fragment"
+        tools:ignore="MissingConstraints" />
+
+</LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#E0E0E0"
+        tools:ignore="MissingConstraints">
+
+    </FrameLayout>
+
+</LinearLayout>
