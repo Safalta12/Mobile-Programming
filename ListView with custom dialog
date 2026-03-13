@@ -1,0 +1,92 @@
+MainActivity.java
+import android.app.Dialog;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    String[] studentNames = {"Ram Sharma", "Sita Rai", "Hari Thapa",
+            "Gita Karki", "Ramesh Gurung"};
+
+    String[] rollNumbers = {"101", "102", "103", "104", "105"};
+
+    String[] emails = {"ram@gmail.com", "sita@gmail.com",
+            "hari@gmail.com", "gita@gmail.com", "ramesh@gmail.com"};
+
+    String[] address = {"Kathmandu", "Pokhara", "Lalitpur",
+            "Bhaktapur", "Chitwan"};
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        ListView listView = findViewById(R.id.listView);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_list_item_1,
+                studentNames
+        );
+
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Dialog dialog = new Dialog(MainActivity.this);
+                dialog.setContentView(R.layout.dialog_student);
+
+                TextView name = dialog.findViewById(R.id.tvName);
+                TextView roll = dialog.findViewById(R.id.tvRoll);
+                TextView email = dialog.findViewById(R.id.tvEmail);
+                TextView addr = dialog.findViewById(R.id.tvAddress);
+
+                name.setText("Name: " + studentNames[position]);
+                roll.setText("Roll No: " + rollNumbers[position]);
+                email.setText("Email: " + emails[position]);
+                addr.setText("Address: " + address[position]);
+
+                dialog.show();
+            }
+        });
+    }
+}
+
+dialog_student.xml
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvName"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tvRoll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tvEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tvAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
